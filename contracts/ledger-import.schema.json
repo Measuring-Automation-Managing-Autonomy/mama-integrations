@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Measuring-Automation-Managing-Autonomy/mama-integrations/main/contracts/ledger-import.schema.json",
+  "title": "Upstream `mama` Autonomy Ledger (import interface)",
+  "description": "The YAML Autonomy Ledger (upstream schema 2) as imported by mama-integrations, expressed in JSON form. Structural validation only — ledger health (coverage, staleness, expiry) remains upstream (ledger_health). Contract content passes through exactly as issued. Note: last_review <= horizon and the non-empty list rules are enforced by the adapter; JSON Schema expresses what it can.",
+  "type": "object",
+  "required": ["schema", "contracts"],
+  "properties": {
+    "schema": {
+      "type": "integer",
+      "description": "Ledger format version. 2 = supported. 1 = retired scale (imported with a loud warning; values on the retired 0-4 scale; re-baseline per upstream migration guidance). Absent = pre-versioning (warning). >=3 = fail closed."
+    },
+    "contracts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/contract" }
+    }
+  },
+  "$defs": {
+    "contract": {
+      "type": "object",
+      "required": [
+        "id", "unit", "domain", "level", "scope", "guardrails", "telemetry",
+        "revocation_triggers", "grantor", "horizon", "last_review", "status"
+      ],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique, stable; version the contract (-v2) rather than mutating history." },
+        "unit": { "type": "string", "minLength": 1 },
+        "domain": { "type": "string", "minLength": 1, "description": "Machine-friendly slug for the autonomy domain." },
+        "level": { "type": "integer", "minimum": 0, "maximum": 5, "description": "As issued by upstream. On schema 2: L0 Submarine Line (no grant) or L1-L5 definitive levels. Never edited by MAMA." },
+        "scope": { "type": "string", "minLength": 1, "description": "Human sentence describing what is delegated." },
+        "guardrails": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Non-empty — a contract without guardrails is not a contract." },
+        "telemetry": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Non-empty." },
+        "revocation_triggers": { "type": "array", "items": { "type": "string" }, "minItems": 1, "description": "Non-empty." },
+        "escalation": { "type": "string", "description": "Optional escalation path." },
+        "grantor": { "type": "string", "minLength": 1, "description": "Accountable holder of the grant (must not be the grantee)." },
+        "horizon": { "type": "string", "format": "date", "description": "ISO-8601 date; grant expires for review purposes." },
+        "last_review": { "type": "string", "format": "date", "description": "ISO-8601 date; must be <= horizon." },
+        "review_cadence_days": { "type": "integer", "exclusiveMinimum": 0, "default": 90 },
+        "status": { "enum": ["active", "expired", "revoked", "draft"] },
+        "notes": { "type": "string", "description": "Optional free text." }
+      },
+      "additionalProperties": false
+    }
+  }
+}

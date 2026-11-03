@@ -1,0 +1,57 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install package with dev dependencies
+        run: python -m pip install --disable-pip-version-check -e ".[dev]"
+      - name: Validate interface JSON Schemas
+        run: |
+          python - <<'PY'
+          import json, pathlib
+          from jsonschema import Draft202012Validator
+          for path in sorted(pathlib.Path("contracts").glob("*.json")):
+              schema = json.loads(path.read_text(encoding="utf-8"))
+              Draft202012Validator.check_schema(schema)
+              print(f"ok   {path.name}")
+          PY
+      - name: Test suite
+        run: python -m pytest -q
+
+  compatibility-doc-agreement:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: versions.py and compatibility.md must agree
+        run: |
+          python - <<'PY'
+          import re, pathlib
+          code = pathlib.Path("src/mama_integrations/versions.py").read_text(encoding="utf-8")
+          doc = pathlib.Path("compatibility.md").read_text(encoding="utf-8")
+          major = re.search(r"SUPPORTED_RULESET_MAJOR = (\d+)", code).group(1)
+          schema = re.search(r"SUPPORTED_LEDGER_SCHEMA = (\d+)", code).group(1)
+          baseline = re.search(r'SUPPORTED_RULESET_VERSION = "([^"]+)"', code).group(1)
+          assert f"RULESET_VERSION | `{baseline}`" in doc or f"`{baseline}`" in doc, (
+              f"compatibility.md does not mention supported ruleset baseline {baseline}"
+          )
+          assert "schema 2" in doc or "`2`" in doc, "compatibility.md does not mention schema 2"
+          print(f"ok   baseline={baseline} major={major} schema={schema} documented")
+          PY
+      - name: Test suite (gates prove the documented behavior)
+        run: python -m pip install -e ".[dev]" && python -m pytest tests/test_versions.py -q

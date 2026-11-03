@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Measuring-Automation-Managing-Autonomy/mama-integrations/main/contracts/assessment-import.schema.json",
+  "title": "Upstream `mama` assessment record (import interface)",
+  "description": "The record emitted by upstream `autonomy-score --json` (ruleset 2.0.0), as imported by mama-integrations. Fields are stored and displayed EXACTLY AS ISSUED — no field in this schema may be recomputed, renamed, or re-weighted by MAMA. Ruleset version gate: MAJOR 2 supported; MAJOR 1 retired (rejected with migration guidance); other majors fail closed.",
+  "type": "object",
+  "required": ["ruleset_version", "scores", "safe_grant_level", "notes", "recommended_move"],
+  "properties": {
+    "ruleset_version": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "Upstream RULESET_VERSION. Persisted with every stored record."
+    },
+    "scores": {
+      "type": "object",
+      "description": "Six dimension scores, 0-5 each: D1 decision clarity, D2 capability, D3 guardrails, D4 telemetry, D5 transparency, D6 accountability. Displayed as issued; the weakest-link rule min(D3,D4,D6) is upstream's, never recomputed here.",
+      "additionalProperties": false,
+      "required": ["D1", "D2", "D3", "D4", "D5", "D6"],
+      "propertyNames": { "pattern": "^D[1-6]$" }
+    },
+    "safe_grant_level": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "description": "Upstream's weakest-link safe level, as issued."
+    },
+    "granted_level": {
+      "oneOf": [
+        { "type": "integer", "minimum": 0, "maximum": 5 },
+        { "type": "null" }
+      ],
+      "description": "Currently granted level; null = no formal grant (Submarine Line context)."
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Upstream gap-analysis notes, verbatim."
+    },
+    "recommended_move": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Upstream management-move recommendation, verbatim. MAMA context may inform the grantor; it never overrides this."
+    }
+  },
+  "additionalProperties": true
+}

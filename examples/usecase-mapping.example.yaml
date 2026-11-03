@@ -1,0 +1,27 @@
+# MAMA use-case ↔ `mama` domain linkage — synthetic example
+# Carries identifiers and versions only. Never a merged identity, never a score.
+mappings:
+  - mama_use_case_id: usecase-ap-invoices
+    project_id: proj-2026-014
+    mama_unit: finance-ops
+    mama_domain: invoice-approval
+    mama_contract_id: ap-invoice-approvals-v1
+    ruleset_version: "2.0.0"
+    ledger_schema: 2
+    linked_at: 2026-11-04
+    note: >
+      Contract displayed as issued (level 2, weakest link min(D3,D4,D6)).
+      MAMA automation metrics for this use case are tracked separately in
+      mama-metrics cards — never merged with the autonomy profile.
+
+  - mama_use_case_id: usecase-branch-rollouts
+    project_id: proj-2026-021
+    mama_unit: netops
+    mama_domain: site-config-rollout
+    mama_contract_id: network-config-changes-v1
+    ruleset_version: "2.0.0"
+    ledger_schema: 2
+    linked_at: 2026-11-04
+    note: >
+      Autonomy profile imported pass-through; rollout success/latency metrics
+      (mama-metrics cards) reported side by side, not aggregated.

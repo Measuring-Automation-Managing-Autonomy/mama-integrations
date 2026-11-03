@@ -1,0 +1,59 @@
+# Autonomy Ledger — synthetic example for mama-integrations
+# Format: upstream `mama` v2.0.0 (ledger schema 2). All data is synthetic.
+# Field rules: docs at emmanuel-a-otchere/MeasuringAndManagingAutonomy (docs/ledger-format.md).
+schema: 2
+
+contracts:
+  - id: ap-invoice-approvals-v1
+    unit: finance-ops
+    domain: invoice-approval
+    level: 2
+    scope: >
+      Approval of routine supplier invoices up to $2,000 that pass the
+      three-way match; everything above or unmatched requires approver action.
+    guardrails:
+      - Hard $2,000 ceiling enforced by the ERP policy engine
+      - Three-way match mandatory before autonomous approval
+      - Daily exception report to the controller
+    telemetry:
+      - Approval log exported to the finance evidence store
+      - Exception-rate dashboard, controller-visible
+    revocation_triggers:
+      - Exception rate above 35% for two consecutive weeks
+      - Any single approval above the ceiling
+      - Missed monthly review
+    escalation: ap-lead -> controller, same business day
+    grantor: controller-finance
+    horizon: 2027-03-31
+    last_review: 2026-10-15
+    review_cadence_days: 90
+    status: active
+    notes: >
+      Synthetic grant for the mama-integrations examples. Linked from MAMA
+      use case usecase-ap-invoices (see usecase-mapping.example.yaml).
+
+  - id: network-config-changes-v1
+    unit: netops
+    domain: site-config-rollout
+    level: 1
+    scope: >
+      Configuration rollout to branch-site access switches from the approved
+      template set only; any non-template change requires engineer execution.
+    guardrails:
+      - Template whitelist enforced by the change tooling
+      - Pre-rollout snapshot and one-command rollback required
+    telemetry:
+      - Rollout journal shared with the network manager
+      - Post-change verification report per site
+    revocation_triggers:
+      - Two failed rollouts in a week
+      - Any out-of-template change attempt
+    escalation: netops-lead -> network-manager, 4-hour SLA
+    grantor: network-manager
+    horizon: 2026-12-31
+    last_review: 2026-09-20
+    review_cadence_days: 90
+    status: active
+    notes: >
+      First formal contract; capability (D2) scored 3 so L1 inform-after with
+      a short horizon. Synthetic example — not a real grant.

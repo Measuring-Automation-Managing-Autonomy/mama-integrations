@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Measuring-Automation-Managing-Autonomy/mama-integrations/main/contracts/usecase-mapping.schema.json",
+  "title": "MAMA use-case ↔ `mama` domain linkage file",
+  "description": "MAMA-side glue joining stable MAMA use-case IDs to upstream `mama` units, domains, and contracts. Carries identifiers and versions only — never a merged identity and never a score. ruleset_version must reference a supported upstream MAJOR (fail-closed otherwise).",
+  "type": "object",
+  "required": ["mappings"],
+  "properties": {
+    "mappings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "mama_use_case_id", "mama_unit", "mama_domain",
+          "mama_contract_id", "ruleset_version", "ledger_schema"
+        ],
+        "properties": {
+          "mama_use_case_id": { "type": "string", "minLength": 1, "pattern": "^usecase-[a-z0-9-]+$", "description": "Stable MAMA use-case identifier." },
+          "project_id": { "type": "string", "minLength": 1, "description": "MAMA project/investment identifier." },
+          "mama_unit": { "type": "string", "minLength": 1, "description": "Upstream `mama` unit id." },
+          "mama_domain": { "type": "string", "minLength": 1, "description": "Upstream `mama` decision-domain slug." },
+          "mama_contract_id": { "type": "contract-id" },
+          "ruleset_version": { "type": "string", "pattern": "^2\\.[0-9]+\\.[0-9]+$", "description": "Upstream ruleset the linked artifacts were issued under. MAJOR 2 required (fail-closed)." },
+          "ledger_schema": { "type": "integer", "const": 2, "description": "Ledger schema of the linked ledger file. Only 2 is linkable; schema 1 must be re-baselined first." },
+          "linked_at": { "type": "string", "format": "date", "description": "ISO-8601 date the linkage was recorded." },
+          "note": { "type": "string", "description": "Free text; e.g. 'contract displayed as issued; automation metrics tracked separately'." }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "$defs": {
+    "contract-id": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Upstream `mama` autonomy contract id (e.g. payments-deploys-v2)."
+    }
+  }
+}
