@@ -19,7 +19,7 @@
           "project_id": { "type": "string", "minLength": 1, "description": "MAMA project/investment identifier." },
           "mama_unit": { "type": "string", "minLength": 1, "description": "Upstream `mama` unit id." },
           "mama_domain": { "type": "string", "minLength": 1, "description": "Upstream `mama` decision-domain slug." },
-          "mama_contract_id": { "type": "contract-id" },
+          "mama_contract_id": { "$ref": "#/$defs/contract-id" },
           "ruleset_version": { "type": "string", "pattern": "^2\\.[0-9]+\\.[0-9]+$", "description": "Upstream ruleset the linked artifacts were issued under. MAJOR 2 required (fail-closed)." },
           "ledger_schema": { "type": "integer", "const": 2, "description": "Ledger schema of the linked ledger file. Only 2 is linkable; schema 1 must be re-baselined first." },
           "linked_at": { "type": "string", "format": "date", "description": "ISO-8601 date the linkage was recorded." },
