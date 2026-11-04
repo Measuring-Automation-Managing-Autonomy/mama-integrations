@@ -2,9 +2,15 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/Measuring-Automation-Managing-Autonomy/mama-integrations/main/contracts/assessment-import.schema.json",
   "title": "Upstream `mama` assessment record (import interface)",
-  "description": "The record emitted by upstream `autonomy-score --json` (ruleset 2.0.0), as imported by mama-integrations. Fields are stored and displayed EXACTLY AS ISSUED — no field in this schema may be recomputed, renamed, or re-weighted by MAMA. Ruleset version gate: MAJOR 2 supported; MAJOR 1 retired (rejected with migration guidance); other majors fail closed.",
+  "description": "The record emitted by upstream `autonomy-score --json` (ruleset 2.0.0), as imported by mama-integrations. Fields are stored and displayed EXACTLY AS ISSUED \u2014 no field in this schema may be recomputed, renamed, or re-weighted by MAMA. Ruleset version gate: MAJOR 2 supported; MAJOR 1 retired (rejected with migration guidance); other majors fail closed.",
   "type": "object",
-  "required": ["ruleset_version", "scores", "safe_grant_level", "notes", "recommended_move"],
+  "required": [
+    "ruleset_version",
+    "scores",
+    "safe_grant_level",
+    "notes",
+    "recommended_move"
+  ],
   "properties": {
     "ruleset_version": {
       "type": "string",
@@ -15,8 +21,55 @@
       "type": "object",
       "description": "Six dimension scores, 0-5 each: D1 decision clarity, D2 capability, D3 guardrails, D4 telemetry, D5 transparency, D6 accountability. Displayed as issued; the weakest-link rule min(D3,D4,D6) is upstream's, never recomputed here.",
       "additionalProperties": false,
-      "required": ["D1", "D2", "D3", "D4", "D5", "D6"],
-      "propertyNames": { "pattern": "^D[1-6]$" }
+      "required": [
+        "D1",
+        "D2",
+        "D3",
+        "D4",
+        "D5",
+        "D6"
+      ],
+      "propertyNames": {
+        "pattern": "^D[1-6]$"
+      },
+      "properties": {
+        "D1": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "description": "D1 decision clarity, 0-5 (0 = Submarine Line for the dimension)"
+        },
+        "D2": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "description": "D2 capability, 0-5"
+        },
+        "D3": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "description": "D3 guardrails, 0-5"
+        },
+        "D4": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "description": "D4 telemetry, 0-5"
+        },
+        "D5": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "description": "D5 transparency, 0-5"
+        },
+        "D6": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5,
+          "description": "D6 accountability, 0-5"
+        }
+      }
     },
     "safe_grant_level": {
       "type": "integer",
@@ -26,14 +79,22 @@
     },
     "granted_level": {
       "oneOf": [
-        { "type": "integer", "minimum": 0, "maximum": 5 },
-        { "type": "null" }
+        {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5
+        },
+        {
+          "type": "null"
+        }
       ],
       "description": "Currently granted level; null = no formal grant (Submarine Line context)."
     },
     "notes": {
       "type": "array",
-      "items": { "type": "string" },
+      "items": {
+        "type": "string"
+      },
       "description": "Upstream gap-analysis notes, verbatim."
     },
     "recommended_move": {
