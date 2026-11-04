@@ -1,6 +1,6 @@
 # Autonomy Ledger — synthetic example for mama-integrations
 # Format: upstream `mama` v2.0.0 (ledger schema 2). All data is synthetic.
-# Field rules: docs at emmanuel-a-otchere/MeasuringAndManagingAutonomy (docs/ledger-format.md).
+# Field rules: docs at emmanuel-a-otchere/measuring-and-managing-autonomy (docs/ledger-format.md).
 schema: 2
 
 contracts:

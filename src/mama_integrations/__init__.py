@@ -8,7 +8,7 @@ logic and never recomputes levels, dimension scores, or weakest-link values.
 
 Canonical homes:
   - This package: https://github.com/Measuring-Automation-Managing-Autonomy/mama-integrations
-  - Upstream `mama` method: https://github.com/emmanuel-a-otchere/MeasuringAndManagingAutonomy
+  - Upstream `mama` method: https://github.com/emmanuel-a-otchere/measuring-and-managing-autonomy
 """
 
 from mama_integrations.assessment import import_assessment

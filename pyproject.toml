@@ -29,7 +29,7 @@ dependencies = ["pyyaml>=6.0"]
 [project.urls]
 Homepage = "https://github.com/Measuring-Automation-Managing-Autonomy/mama-integrations"
 Issues = "https://github.com/Measuring-Automation-Managing-Autonomy/mama-integrations/issues"
-Upstream-method = "https://github.com/emmanuel-a-otchere/MeasuringAndManagingAutonomy"
+Upstream-method = "https://github.com/emmanuel-a-otchere/measuring-and-managing-autonomy"
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "jsonschema>=4.21"]

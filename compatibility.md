@@ -1,6 +1,6 @@
 # Compatibility Matrix — upstream `mama`
 
-**Status:** draft (adapter v0.1.0) · **Upstream canonical home:** [`emmanuel-a-otchere/MeasuringAndManagingAutonomy`](https://github.com/emmanuel-a-otchere/MeasuringAndManagingAutonomy)
+**Status:** draft (adapter v0.1.0) · **Upstream canonical home:** [`emmanuel-a-otchere/measuring-and-managing-autonomy`](https://github.com/emmanuel-a-otchere/measuring-and-managing-autonomy)
 
 This file is the human-readable authority for which upstream `mama` versions this adapter supports. It must agree with `src/mama_integrations/versions.py` (CI-checked).
 
