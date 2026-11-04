@@ -2,6 +2,17 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); semver. Every release declares supported upstream `mama` versions (see [compatibility.md](compatibility.md)).
 
+## [0.1.1] — 2026-11-05
+
+### Fixed
+
+- `contracts/assessment-import.schema.json`: the `scores` object declared
+  `additionalProperties: false` with no named properties, which rejects
+  every valid upstream record (D1–D6 treated as "additional"). The six
+  dimension properties are now declared (integer 0–5 each); `required` and
+  the `D[1-6]` propertyNames guard are unchanged. Found by the
+  mama-conformance fixture suite.
+
 ## [0.1.0] — 2026-11-04
 
 ### Added (initial scaffold, CR MAMA-ORG-CR-001)
