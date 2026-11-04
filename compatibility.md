@@ -27,6 +27,7 @@ This file is the human-readable authority for which upstream `mama` versions thi
 - **Assessment record** — `autonomy-score --json`: `ruleset_version`, `scores` (D1–D6, 0–5), `safe_grant_level`, `granted_level` (int or null), `notes[]`, `recommended_move`. Schema: [`contracts/assessment-import.schema.json`](contracts/assessment-import.schema.json).
 - **Autonomy Ledger** — YAML, top-level `schema: 2`, `contracts[]` with `id`, `unit`, `domain`, `level` (0–5), `scope`, `guardrails[]` (non-empty), `telemetry[]` (non-empty), `revocation_triggers[]` (non-empty), `escalation`, `grantor`, `horizon`, `last_review` (≤ horizon), `review_cadence_days`, `status` (`active|expired|revoked|draft`), `notes`. Schema: [`contracts/ledger-import.schema.json`](contracts/ledger-import.schema.json).
 - **Linkage file** — MAMA-side mapping of use cases to `mama` units/domains/contracts: [`contracts/usecase-mapping.schema.json`](contracts/usecase-mapping.schema.json).
+- **Related upstream schema** — upstream also publishes a *scorecard export envelope* (`schema/mama-scorecard-export.schema.json`, export_version 1.0.0) that wraps an assessment record with linkage, evidence references, and versions. MAMA's `assessment-import.schema.json` covers the inner scorecard object; when upstream exports use the envelope, read `scorecard` from it and carry the envelope's linkage/versions alongside — they align by design but are separate publications, versioned independently.
 
 ## Verification
 
