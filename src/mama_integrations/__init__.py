@@ -1,6 +1,6 @@
 """mama-integrations — version-pinned MAMA ↔ `mama` import/export adapters.
 
-MAMA (Measuring Automation & Measuring Autonomy) consumes the lowercase
+MAMA (Measuring Automation, Managing Autonomy) consumes the lowercase
 `mama` (measuring and managing autonomy) method's versioned outputs through
 this package. Upstream outputs are **passed through exactly as issued**;
 this package validates structure and versions only — it contains no scoring

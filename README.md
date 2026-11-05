@@ -1,10 +1,10 @@
 # mama-integrations
 
-**MAMA** (Measuring Automation & Measuring Autonomy) — version-pinned import/export adapters connecting MAMA use cases to the upstream **`mama`** (measuring and managing autonomy) method's assessments and ledgers.
+**MAMA** (Measuring Automation, Managing Autonomy) — version-pinned import/export adapters connecting MAMA use cases to the upstream **`mama`** (measuring and managing autonomy) method's assessments and ledgers.
 
 **Status:** `draft` (v0.1.0) · **License:** Apache-2.0 · **Maintainer:** see [MAINTAINERS.md](MAINTAINERS.md)
 
-> **First reference:** MAMA (Measuring Automation & Measuring Autonomy) uses the `mama` (measuring and managing autonomy) method for its autonomy-governance component. The `mama` method's canonical home is [`emmanuel-a-otchere/measuring-and-managing-autonomy`](https://github.com/emmanuel-a-otchere/measuring-and-managing-autonomy).
+> **First reference:** MAMA (Measuring Automation, Managing Autonomy) uses the `mama` (measuring and managing autonomy) method for its autonomy-governance component. The `mama` method's canonical home is [`emmanuel-a-otchere/measuring-and-managing-autonomy`](https://github.com/emmanuel-a-otchere/measuring-and-managing-autonomy).
 
 ## What this repo is — and is not
 

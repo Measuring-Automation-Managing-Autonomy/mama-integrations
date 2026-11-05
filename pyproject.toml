@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "mama-integrations"
 version = "0.1.0"
-description = "Version-pinned import/export adapters connecting MAMA (Measuring Automation & Measuring Autonomy) use cases to the upstream `mama` (measuring and managing autonomy) method's assessments and ledgers. Consumes versioned outputs; never reimplements scoring."
+description = "Version-pinned import/export adapters connecting MAMA (Measuring Automation, Managing Autonomy) use cases to the upstream `mama` (measuring and managing autonomy) method's assessments and ledgers. Consumes versioned outputs; never reimplements scoring."
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
